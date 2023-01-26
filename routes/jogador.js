@@ -2630,7 +2630,7 @@ router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta/:atributo", (r
         amigosPendentes: req.user.amigosPendentes
     }
 
-    console.log(teste)
+    console.log("Eae")
 
 })
 
