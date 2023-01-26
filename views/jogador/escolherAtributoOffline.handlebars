@@ -1,0 +1,52 @@
+<div class="tampar-nav">
+
+</div>
+
+<!-- ESCOLHA ATRIBUTO DA CARTA -->
+
+<div class="escolher-atributo-container">
+
+    <div class="foto-carta-atributo">
+        <img src="{{carta.fotoCarta}}">
+    </div>
+
+    <div class="atributos">
+        <form action="/PvpOffline/escolherCarta/{{escalacao._id}}/{{adversario._id}}/{{carta}}/ritmo" method="POST">
+            <button>
+                Ritmo
+            </button>
+        </form>
+
+        <form action="/PvpOffline/escolherCarta/{{escalacao._id}}/{{adversario._id}}/{{carta}}/drible" method="POST">
+            <button>
+                Drible
+            </button>
+        </form>
+
+        <form action="/PvpOffline/escolherCarta/{{escalacao._id}}/{{adversario._id}}/{{carta}}/finalizacao" method="POST">
+            <button>
+                Finalização
+            </button>
+        </form>
+
+        <form action="/PvpOffline/escolherCarta/{{escalacao._id}}/{{adversario._id}}/{{carta}}/defesa" method="POST">
+            <button>
+                Defesa
+            </button>
+        </form>
+
+        <form action="/PvpOffline/escolherCarta/{{escalacao._id}}/{{adversario._id}}/{{carta}}/passe" method="POST">
+            <button>
+                Passe
+            </button>
+        </form>
+
+        <form action="/PvpOffline/escolherCarta/{{escalacao._id}}/{{adversario._id}}/{{carta}}/fisico" method="POST">
+            <button>    
+                Físico
+            </button>
+        </form>
+        
+    </div>
+
+</div>
