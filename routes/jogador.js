@@ -2511,7 +2511,7 @@ router.get("/PvpOffline/meuTime/:escalacao/:oponente", (req, res) => { // Aqui v
 })
 
 
-router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta", (req, res) => {
+router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta/:numeroCarta", (req, res) => {
 
     const jogadorLogado = {
         id: req.user._id,
@@ -2533,72 +2533,51 @@ router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta", (req, res) =
 
     console.log("CHEGOU NO POST")
 
+    console.log(`carta antes => ${req.params.carta}`)
+
     CartaGerada.findOne({ _id: req.params.carta }).lean().then((carta) => {
 
-        console.log(`carta => ${carta}`)
+        console.log(`carta => ${carta._id}`)
 
-        Jogador.find({ novo: 1 }).lean().then((jogadores) => {
+        Jogador.findOne({ _id: req.params.oponente }).lean().then((oponente) => {
 
-            var jogadoresDisponiveis = []
+            console.log(`OPONENTE => ${oponente.nome}`)
 
-            jogadores.forEach(jogador => {
+            Lineup.findOne({ $and: [{ dono: oponente._id }, { titular: 1 }] }).lean().then((escalacaoOponente) => {
 
-                if (jogador._id != jogadorLogado.id) {
+                console.log(`OPONENTE => ${escalacaoOponente.nome}`)
 
-                    jogadoresDisponiveis.push(jogador.nomeClube)
+                Lineup.findOne({ _id: req.params.escalacao }).lean().then((escalacaoMinha) => {
 
-                }
+                    console.log(`MINHA ESCALACAO => ${escalacaoMinha.nome}`)
 
-            })
+                    var numeroCarta = req.params.numeroCarta
+                    res.render("jogador/escolherAtributoOffline", { jogador: jogadorLogado, escalacao: escalacaoMinha, escalacaoOponente: escalacaoOponente, adversario: oponente, carta: carta, numeroCarta: numeroCarta })
 
-            var idAdversario = Math.floor(Math.random() * jogadoresDisponiveis.length)
-            var Adversario = jogadoresDisponiveis[idAdversario]
-
-            console.log(`JOGADORES => ${jogadoresDisponiveis}`)
-            console.log(`Adversário => ${Adversario}`)
-
-            Jogador.findOne({ nomeClube: Adversario }).lean().then((oponente) => {
-
-                console.log(`OPONENTE => ${oponente.nome}`)
-
-                Lineup.findOne({ $and: [{ dono: oponente._id }, { titular: 1 }] }).lean().then((escalacaoOponente) => {
-
-                    console.log(`OPONENTE => ${escalacaoOponente.nome}`)
-
-                    Lineup.findOne({ _id: req.params.escalacao }).lean().then((escalacaoMinha) => {
-
-                        console.log(`MINHA ESCALACAO => ${escalacaoMinha.nome}`)
-
-                        res.render("jogador/escolherAtributoOffline", { jogador: jogadorLogado, escalacao: escalacaoMinha, escalacaoOponente: escalacaoOponente, adversario: oponente, carta: carta })
-
-
-                    }).catch((erro) => {
-
-                        req.flash('error_msg', 'ERRO! Não foi possível encontrar a sua escalação...')
-                        res.redirect("/")
-
-                    })
 
                 }).catch((erro) => {
 
-                    req.flash('error_msg', 'ERRO! Não foi possível encontrar a escalação do adversário...')
+                    req.flash('error_msg', 'ERRO! Não foi possível encontrar a sua escalação...')
                     res.redirect("/")
 
                 })
 
             }).catch((erro) => {
 
-                req.flash('error_msg', 'ERRO! Não foi possível encontrar um adversário...')
+                req.flash('error_msg', 'ERRO! Não foi possível encontrar a escalação do adversário...')
                 res.redirect("/")
 
             })
 
         }).catch((erro) => {
 
-            req.flash('error_msg', 'ERRO! Não foi possível encontrar nenhum jogador...')
+            console.log(erro)
+            req.flash('error_msg', 'ERRO! Não foi possível encontrar um adversário...')
             res.redirect("/")
 
         })
+
+
 
     }).catch((erro) => {
 
@@ -2609,9 +2588,9 @@ router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta", (req, res) =
 
 })
 
-router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta/:atributo", (req, res) => {
+router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta/:numeroCarta/:atributo", (req, res) => { // Depois que o cara escolher o atributo
 
-    
+
     const jogadorLogado = {
         id: req.user._id,
         nome: req.user.nome,
@@ -2630,7 +2609,195 @@ router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta/:atributo", (r
         amigosPendentes: req.user.amigosPendentes
     }
 
-    console.log("Eae")
+    Jogador.findOne({ _id: jogadorLogado.id }).lean().then((jogador) => {
+
+        console.log("SUCESSO AO ENCONTRAR O JOGADOR ATUAL")
+
+        Jogador.findOne({ _id: req.params.oponente }).lean().then((adversario) => {
+
+            console.log(`SUCESSO AO ENCONTRAR O OPONENTE => ${adversario.nomeClube}`)
+
+            Lineup.findOne({ _id: req.params.escalacao }).lean().then((minhaEscalacao) => {
+
+                console.log(`SUCESSO AO ENCONTRAR A SUA LINEUP => ${minhaEscalacao.nome}`)
+
+                Lineup.findOne({ $and: [{ dono: req.params.oponente }, { titular: 1 }] }).lean().then((oponenteEscalacao) => {
+
+                    console.log(`SUCESSO AO ENCONTRAR A LINEUP DO CARA => ${oponenteEscalacao.nome}`)
+
+                    CartaGerada.findOne({ _id: req.params.carta }).lean().then((minhaCarta) => {
+
+                        console.log(`SUCESSO CARTA ENCONTRADA => ${minhaCarta.nome}`)
+
+                        var idCartaOponente = ""
+
+                        if (req.params.numeroCarta == "carta1") {
+
+                            idCartaOponente = oponenteEscalacao.IDcarta1
+                            console.log(`${idCartaOponente}`)
+
+                        }
+
+                        if (req.params.numeroCarta == "carta2") {
+
+                            idCartaOponente = oponenteEscalacao.IDcarta1
+                            console.log(`${idCartaOponente}`)
+
+                        }
+
+                        if (req.params.numeroCarta == "carta3") {
+
+                            idCartaOponente = oponenteEscalacao.IDcarta1
+                            console.log(`${idCartaOponente}`)
+
+                        }
+
+                        if (req.params.numeroCarta == "carta4") {
+
+                            idCartaOponente = oponenteEscalacao.IDcarta1
+                            console.log(`${idCartaOponente}`)
+
+                        }
+
+                        if (req.params.numeroCarta == "carta5") {
+
+                            idCartaOponente = oponenteEscalacao.IDcarta1
+                            console.log(`${idCartaOponente}`)
+
+                        }
+
+                        if (req.params.numeroCarta == "carta6") {
+
+                            idCartaOponente = oponenteEscalacao.IDcarta1
+                            console.log(`${idCartaOponente}`)
+
+                        }
+
+                        if (req.params.numeroCarta == "carta7") {
+
+                            idCartaOponente = oponenteEscalacao.IDcarta1
+                            console.log(`${idCartaOponente}`)
+
+                        }
+
+                        if (req.params.numeroCarta == "carta8") {
+
+                            idCartaOponente = oponenteEscalacao.IDcarta1
+                            console.log(`${idCartaOponente}`)
+
+                        }
+
+                        if (req.params.numeroCarta == "carta9") {
+
+                            idCartaOponente = oponenteEscalacao.IDcarta1
+                            console.log(`${idCartaOponente}`)
+
+                        }
+
+                        if (req.params.numeroCarta == "carta10") {
+
+                            idCartaOponente = oponenteEscalacao.IDcarta1
+                            console.log(`${idCartaOponente}`)
+
+                        }
+
+                        if (req.params.numeroCarta == "carta11") {
+
+                            idCartaOponente = oponenteEscalacao.IDcarta1
+                            console.log(`${idCartaOponente}`)
+
+                        }
+
+                        CartaGerada.findOne({ _id: idCartaOponente }).lean().then((oponenteCarta) => {
+
+                            console.log(`SUCESSO CARTA ENCONTRADA => ${oponenteCarta.nome}`)
+
+                            if (req.params.atributo == "ritmo") {
+
+                                var valorRitmo_1 = minhaCarta.ritmo
+                                var valorRitmo_2 = oponenteCarta.ritmo
+                                console.log(`${valorRitmo_1}, ${valorRitmo_2}`)
+                                
+                                if (valorRitmo_1 > valorRitmo_2) {
+
+                                    req.flash('success_msg', 'Você ganhou')
+                                    res.redirect('/')
+
+                                } 
+
+                                if (valorRitmo_2 > valorRitmo_1) {
+
+                                    req.flash('error_msg', 'Você perdeu')
+                                    res.redirect('/')
+                                }
+
+                                if (valorRitmo_1 == valorRitmo_2) {
+
+                                    req.flash('success_msg', 'Empate')
+                                    res.redirect('/')
+
+                                }
+                                
+
+                            }
+
+                            if (req.params.atributo == "finalizacao") {
+
+                            }
+
+                            if (req.params.atributo == "passe") {
+
+                            }
+
+                            if (req.params.atributo == "drible") {
+
+                            }
+
+                            if (req.params.atributo == "defesa") {
+
+                            }
+
+                            if (req.params.atributo == "fisico") {
+
+                            }
+
+                        })
+
+                    }).catch((erro) => {
+
+                        console.log(erro)
+                        req.flash('error_msg', 'ERRO! Houve um erro ao encontrar ao encontrar a sua carta!')
+                        res.redirect("/")
+
+                    })
+
+                }).catch((erro) => {
+
+                    req.flash('error_msg', 'ERRO! Houve um erro ao encontrar a escalação do adversário!')
+                    res.redirect("/")
+
+                })
+
+            }).catch((erro) => {
+
+                req.flash('error_msg', 'ERRO! Houve um erro ao encontrar a sua escalação!')
+                res.redirect("/")
+
+            })
+
+        }).catch((erro) => {
+
+            req.flash('error_msg', 'ERRO! Houve um erro ao conectar-se com o adversário!')
+            res.redirect("/")
+
+        })
+
+    }).catch((erro) => {
+
+        req.flash('error_msg', 'ERRO! Houve um erro ao conectar-se a sua conta!')
+        res.redirect("/")
+
+    })
 
 })
 
