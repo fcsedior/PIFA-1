@@ -2908,6 +2908,62 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                     if (valor_1 == valor_2) {
 
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Empate"
+
+                                        }
+
                                         req.flash('success_msg', 'Empate')
                                         res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
 
@@ -3055,6 +3111,63 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                     if (valor_1 == valor_2) {
 
+                                        
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Empate"
+
+                                        }
+
                                         req.flash('success_msg', 'Empate')
                                         res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
 
@@ -3200,6 +3313,63 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
                                     }
 
                                     if (valor_1 == valor_2) {
+
+                                        
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Empate"
+
+                                        }
 
                                         req.flash('success_msg', 'Empate')
                                         res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
@@ -3347,6 +3517,63 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                     if (valor_1 == valor_2) {
 
+                                        
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Empate"
+
+                                        }
+
                                         req.flash('success_msg', 'Empate')
                                         res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
 
@@ -3493,6 +3720,63 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                     if (valor_1 == valor_2) {
 
+                                        
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Empate"
+
+                                        }
+
                                         req.flash('success_msg', 'Empate')
                                         res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
 
@@ -3638,6 +3922,63 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
                                     }
 
                                     if (valor_1 == valor_2) {
+
+                                        
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Empate"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Empate"
+
+                                        }
 
                                         req.flash('success_msg', 'Empate')
                                         res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
