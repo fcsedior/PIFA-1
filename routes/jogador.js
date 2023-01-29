@@ -2511,7 +2511,7 @@ router.get("/PvpOffline/meuTime/:escalacao/:oponente", (req, res) => { // Aqui v
 })
 
 
-router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta/:numeroCarta", (req, res) => {
+router.get("/pvpOffline/escolherCarta/:partida/:escalacao/:oponente/:carta/:numeroCarta", (req, res) => {
 
     const jogadorLogado = {
         id: req.user._id,
@@ -2588,7 +2588,7 @@ router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta/:numeroCarta",
 
 })
 
-router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta/:numeroCarta/:atributo", (req, res) => { // Depois que o cara escolher o atributo
+router.get("/pvpOffline/escolherCarta/:partida/:escalacao/:oponente/:carta/:numeroCarta/:atributo", (req, res) => { // Depois que o cara escolher o atributo
 
 
     const jogadorLogado = {
@@ -2708,33 +2708,34 @@ router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta/:numeroCarta/:
 
                         }
 
+                        Partida.findOne({})
+
                         CartaGerada.findOne({ _id: idCartaOponente }).lean().then((oponenteCarta) => {
 
                             console.log(`SUCESSO CARTA ENCONTRADA => ${oponenteCarta.nome}`)
 
                             if (req.params.atributo == "ritmo") {
 
-                                var valorRitmo_1 = minhaCarta.ritmo
-                                var valorRitmo_2 = oponenteCarta.ritmo
-                                console.log(`${valorRitmo_1}, ${valorRitmo_2}`)
+                                var valor_1 = minhaCarta.ritmo
+                                var valor_2 = oponenteCarta.ritmo
                                 
-                                if (valorRitmo_1 > valorRitmo_2) {
+                                if (valor_1 > valor_2) {
 
                                     req.flash('success_msg', 'Você ganhou')
-                                    res.redirect('/')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
 
                                 } 
 
-                                if (valorRitmo_2 > valorRitmo_1) {
+                                if (valor_2 > valor_1) {
 
                                     req.flash('error_msg', 'Você perdeu')
-                                    res.redirect('/')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
                                 }
 
-                                if (valorRitmo_1 == valorRitmo_2) {
+                                if (valor_1 == valor_2) {
 
                                     req.flash('success_msg', 'Empate')
-                                    res.redirect('/')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
 
                                 }
                                 
@@ -2743,21 +2744,136 @@ router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta/:numeroCarta/:
 
                             if (req.params.atributo == "finalizacao") {
 
+                                var valor_1 = minhaCarta.finalizacao
+                                var valor_2 = oponenteCarta.finalizacao
+
+                                if (valor_1 > valor_2) {
+
+                                    req.flash('success_msg', 'Você ganhou')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+
+                                } 
+
+                                if (valor_2 > valor_1) {
+
+                                    req.flash('error_msg', 'Você perdeu')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+                                }
+
+                                if (valor_1 == valor_2) {
+
+                                    req.flash('success_msg', 'Empate')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+
+                                }
+
                             }
 
                             if (req.params.atributo == "passe") {
+
+                                var valor_1 = minhaCarta.passe
+                                var valor_2 = oponenteCarta.passe
+
+                                if (valor_1 > valor_2) {
+
+                                    req.flash('success_msg', 'Você ganhou')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+
+                                } 
+
+                                if (valor_2 > valor_1) {
+
+                                    req.flash('error_msg', 'Você perdeu')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+                                }
+
+                                if (valor_1 == valor_2) {
+
+                                    req.flash('success_msg', 'Empate')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+
+                                }
 
                             }
 
                             if (req.params.atributo == "drible") {
 
+                                var valor_1 = minhaCarta.drible
+                                var valor_2 = oponenteCarta.drible
+
+                                if (valor_1 > valor_2) {
+
+                                    req.flash('success_msg', 'Você ganhou')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+
+                                } 
+
+                                if (valor_2 > valor_1) {
+
+                                    req.flash('error_msg', 'Você perdeu')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+                                }
+
+                                if (valor_1 == valor_2) {
+
+                                    req.flash('success_msg', 'Empate')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+
+                                }
+
                             }
 
                             if (req.params.atributo == "defesa") {
 
+                                var valor_1 = minhaCarta.defesa
+                                var valor_2 = oponenteCarta.defesa
+
+                                if (valor_1 > valor_2) {
+
+                                    req.flash('success_msg', 'Você ganhou')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+
+                                } 
+
+                                if (valor_2 > valor_1) {
+
+                                    req.flash('error_msg', 'Você perdeu')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+                                }
+
+                                if (valor_1 == valor_2) {
+
+                                    req.flash('success_msg', 'Empate')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+
+                                }
+
                             }
 
                             if (req.params.atributo == "fisico") {
+
+                                var valor_1 = minhaCarta.fisico
+                                var valor_2 = oponenteCarta.fisico
+   
+                                if (valor_1 > valor_2) {
+
+                                    req.flash('success_msg', 'Você ganhou')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+
+                                } 
+
+                                if (valor_2 > valor_1) {
+
+                                    req.flash('error_msg', 'Você perdeu')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+                                }
+
+                                if (valor_1 == valor_2) {
+
+                                    req.flash('success_msg', 'Empate')
+                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
+
+                                }
 
                             }
 
@@ -2802,6 +2918,3 @@ router.get("/pvpOffline/escolherCarta/:escalacao/:oponente/:carta/:numeroCarta/:
 })
 
 module.exports = router;
-
-
-

@@ -55,6 +55,9 @@ const Partida = new Schema({
     },
     ganhador: {
         type: String
+    },
+    cartasUsadas: {
+        type: String
     }
 
 })
