@@ -21,6 +21,23 @@ const Lineup = mongoose.model("lineups")
 require("../models/Partida")
 const Partida = mongoose.model("partidas")
 
+// Funções
+
+
+function getPassword() {
+    var chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ!@#$%&*?";
+    var passwordLength = 10;
+    var password = "";
+
+    for (var i = 0; i < passwordLength; i++) {
+        var randomNumber = Math.floor(Math.random() * chars.length);
+        password += chars.substring(randomNumber, randomNumber + 1);
+    }
+
+    return password
+}
+
+
 // Declarando Rotas
 
 router.get('/')
@@ -2422,15 +2439,28 @@ router.get("/pvpOffline/encontrarAdversario/:escalacao", (req, res) => { // Aqui
 
         Jogador.findOne({ nomeClube: Adversario }).lean().then((oponente) => {
 
+            var partidaID = getPassword()
+
             var novaPartida = {
-                jogador1: jogadorLogado.id,
-                jogador2: oponente._id,
+                idPartida: partidaID,
+                jogador: jogadorLogado.id,
+                oponente: oponente._id,
+
             }
 
             new Partida(novaPartida).save().then(() => {
 
                 console.log(`OPONENTE => ${oponente.nome}`)
-                res.render("jogador/aceitarPvpOff", { jogador: jogadorLogado, adversario: oponente, lineup: req.params.escalacao })
+                Partida.findOne({ idPartida: partidaID }).lean().then((partida) => {
+
+                    res.render("jogador/aceitarPvpOff", { jogador: jogadorLogado, adversario: oponente, lineup: req.params.escalacao, partida: partida })
+
+                }).catch((erro) => {
+
+                    req.flash('error_msg', 'ERRO! Não foi possível carregar a partida...')
+                    res.redirect("/")
+
+                })
 
             }).catch((erro) => {
 
@@ -2455,7 +2485,7 @@ router.get("/pvpOffline/encontrarAdversario/:escalacao", (req, res) => { // Aqui
 
 })
 
-router.get("/PvpOffline/meuTime/:escalacao/:oponente", (req, res) => { // Aqui vem o cara pq ja aceitou
+router.get("/PvpOffline/meuTime/:partida/:escalacao", (req, res) => { // Aqui vem o cara pq ja aceitou
 
     const jogadorLogado = {
         id: req.user._id,
@@ -2475,35 +2505,58 @@ router.get("/PvpOffline/meuTime/:escalacao/:oponente", (req, res) => { // Aqui v
         amigosPendentes: req.user.amigosPendentes
     }
 
-    Jogador.findOne({ _id: req.params.oponente }).lean().then((oponente) => {
+    Partida.findOne({ _id: req.params.partida }).then((partida) => {
 
-        Lineup.findOne({ $and: [{ dono: oponente._id }, { titular: 1 }] }).lean().then((escalacaoOponente) => {
+        Jogador.findOne({ _id: partida.oponente }).lean().then((oponente) => {
 
-            console.log(`ESCALACAO DO OPONENTE => ${escalacaoOponente.nome}`)
+            Lineup.findOne({ $and: [{ dono: oponente._id }, { titular: 1 }] }).lean().then((escalacaoOponente) => {
 
-            Lineup.findOne({ _id: req.params.escalacao }).lean().then((escalacaoMinha) => {
+                partida.lineOponente = escalacaoOponente._id
+                console.log(`ESCALACAO DO OPONENTE => ${escalacaoOponente.nome}`)
 
-                console.log(`MINHA ESCALACAO => ${escalacaoMinha.nome}`)
+                Lineup.findOne({ _id: req.params.escalacao }).lean().then((escalacaoMinha) => {
 
-                res.render("jogador/PvpOfflineEscalacao", { jogador: jogadorLogado, escalacao: escalacaoMinha, escalacaoOponente: escalacaoOponente, adversario: oponente })
+                    partida.lineMinha = escalacaoMinha._id
+
+                    partida.save().then(() => {
+
+                        console.log(`MINHA ESCALACAO => ${escalacaoMinha.nome}`)
+
+                        var idPartida = partida._id
+
+                        res.render("jogador/PvpOfflineEscalacao", { jogador: jogadorLogado, escalacao: escalacaoMinha, escalacaoOponente: escalacaoOponente, adversario: oponente, partida: idPartida })
+
+                    }).catch((erro) => {
+
+                        req.flash('error_msg', 'ERRO! Não foi possível salvar algumas configurações...')
+                        res.redirect("/")
+
+                    })
+
+                }).catch((erro) => {
+
+                    req.flash('error_msg', 'ERRO! Não foi possível encontrar a sua escalação...')
+                    res.redirect("/")
+
+                })
 
             }).catch((erro) => {
 
-                req.flash('error_msg', 'ERRO! Não foi possível encontrar a sua escalação...')
+                req.flash('error_msg', 'ERRO! Não foi possível encontrar a escalação do adversário...')
                 res.redirect("/")
 
             })
 
         }).catch((erro) => {
 
-            req.flash('error_msg', 'ERRO! Não foi possível encontrar a escalação do adversário...')
+            req.flash('error_msg', 'ERRO! Não foi possível encontrar o adversário...')
             res.redirect("/")
 
         })
 
     }).catch((erro) => {
 
-        req.flash('error_msg', 'ERRO! Não foi possível encontrar o adversário...')
+        req.flash('error_msg', 'ERRO! Não foi possível carregar a partida...')
         res.redirect("/")
 
     })
@@ -2511,7 +2564,7 @@ router.get("/PvpOffline/meuTime/:escalacao/:oponente", (req, res) => { // Aqui v
 })
 
 
-router.get("/pvpOffline/escolherCarta/:partida/:escalacao/:oponente/:carta/:numeroCarta", (req, res) => {
+router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta", (req, res) => {
 
     const jogadorLogado = {
         id: req.user._id,
@@ -2535,60 +2588,62 @@ router.get("/pvpOffline/escolherCarta/:partida/:escalacao/:oponente/:carta/:nume
 
     console.log(`carta antes => ${req.params.carta}`)
 
-    CartaGerada.findOne({ _id: req.params.carta }).lean().then((carta) => {
+    Partida.findOne({ _id: req.params.partida }).lean().then((partida) => {
 
-        console.log(`carta => ${carta._id}`)
+        CartaGerada.findOne({ _id: req.params.carta }).lean().then((carta) => {
 
-        Jogador.findOne({ _id: req.params.oponente }).lean().then((oponente) => {
+            console.log(`carta => ${carta._id}`)
 
-            console.log(`OPONENTE => ${oponente.nome}`)
+            Jogador.findOne({ _id: partida.oponente }).lean().then((oponente) => {
 
-            Lineup.findOne({ $and: [{ dono: oponente._id }, { titular: 1 }] }).lean().then((escalacaoOponente) => {
+                console.log(`OPONENTE => ${oponente.nome}`)
 
-                console.log(`OPONENTE => ${escalacaoOponente.nome}`)
+                Lineup.findOne({ _id: partida.lineOponente }).lean().then((escalacaoOponente) => {
 
-                Lineup.findOne({ _id: req.params.escalacao }).lean().then((escalacaoMinha) => {
+                    console.log(`OPONENTE ESCALACAO => ${escalacaoOponente.nome}`)
 
-                    console.log(`MINHA ESCALACAO => ${escalacaoMinha.nome}`)
+                    Lineup.findOne({ _id: partida.lineMinha }).lean().then((escalacaoMinha) => {
 
-                    var numeroCarta = req.params.numeroCarta
-                    res.render("jogador/escolherAtributoOffline", { jogador: jogadorLogado, escalacao: escalacaoMinha, escalacaoOponente: escalacaoOponente, adversario: oponente, carta: carta, numeroCarta: numeroCarta })
+                        console.log(`MINHA ESCALACAO => ${escalacaoMinha.nome}`)
 
+                        var numeroCarta = req.params.numeroCarta
+                        res.render("jogador/escolherAtributoOffline", { jogador: jogadorLogado, escalacao: escalacaoMinha, escalacaoOponente: escalacaoOponente, adversario: oponente, carta: carta, numeroCarta: numeroCarta, partida: partida })
+
+
+                    }).catch((erro) => {
+
+                        req.flash('error_msg', 'ERRO! Não foi possível encontrar a sua escalação...')
+                        res.redirect("/")
+
+                    })
 
                 }).catch((erro) => {
 
-                    req.flash('error_msg', 'ERRO! Não foi possível encontrar a sua escalação...')
+                    req.flash('error_msg', 'ERRO! Não foi possível encontrar a escalação do adversário...')
                     res.redirect("/")
 
                 })
 
             }).catch((erro) => {
 
-                req.flash('error_msg', 'ERRO! Não foi possível encontrar a escalação do adversário...')
+                console.log(erro)
+                req.flash('error_msg', 'ERRO! Não foi possível encontrar um adversário...')
                 res.redirect("/")
 
             })
 
         }).catch((erro) => {
 
-            console.log(erro)
-            req.flash('error_msg', 'ERRO! Não foi possível encontrar um adversário...')
+            req.flash('error_msg', 'ERRO! Não foi possível encontrar a carta...')
             res.redirect("/")
 
         })
-
-
-
-    }).catch((erro) => {
-
-        req.flash('error_msg', 'ERRO! Não foi possível encontrar a carta...')
-        res.redirect("/")
 
     })
 
 })
 
-router.get("/pvpOffline/escolherCarta/:partida/:escalacao/:oponente/:carta/:numeroCarta/:atributo", (req, res) => { // Depois que o cara escolher o atributo
+router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (req, res) => { // Depois que o cara escolher o atributo
 
 
     const jogadorLogado = {
@@ -2609,309 +2664,1025 @@ router.get("/pvpOffline/escolherCarta/:partida/:escalacao/:oponente/:carta/:nume
         amigosPendentes: req.user.amigosPendentes
     }
 
-    Jogador.findOne({ _id: jogadorLogado.id }).lean().then((jogador) => {
+    Partida.findOne({ _id: req.params.partida }).then((partida) => {
 
-        console.log("SUCESSO AO ENCONTRAR O JOGADOR ATUAL")
+        Jogador.findOne({ _id: jogadorLogado.id }).lean().then((jogador) => {
 
-        Jogador.findOne({ _id: req.params.oponente }).lean().then((adversario) => {
+            console.log("SUCESSO AO ENCONTRAR O JOGADOR ATUAL")
 
-            console.log(`SUCESSO AO ENCONTRAR O OPONENTE => ${adversario.nomeClube}`)
+            Jogador.findOne({ _id: partida.oponente }).lean().then((adversario) => {
 
-            Lineup.findOne({ _id: req.params.escalacao }).lean().then((minhaEscalacao) => {
+                console.log(`SUCESSO AO ENCONTRAR O OPONENTE => ${adversario.nomeClube}`)
 
-                console.log(`SUCESSO AO ENCONTRAR A SUA LINEUP => ${minhaEscalacao.nome}`)
+                Lineup.findOne({ _id: partida.lineMinha }).lean().then((minhaEscalacao) => {
 
-                Lineup.findOne({ $and: [{ dono: req.params.oponente }, { titular: 1 }] }).lean().then((oponenteEscalacao) => {
+                    console.log(`SUCESSO AO ENCONTRAR A SUA LINEUP => ${minhaEscalacao.nome}`)
 
-                    console.log(`SUCESSO AO ENCONTRAR A LINEUP DO CARA => ${oponenteEscalacao.nome}`)
+                    Lineup.findOne({ _id: partida.lineOponente }).lean().then((oponenteEscalacao) => {
 
-                    CartaGerada.findOne({ _id: req.params.carta }).lean().then((minhaCarta) => {
+                        console.log(`SUCESSO AO ENCONTRAR A LINEUP DO CARA => ${oponenteEscalacao.nome}`)
 
-                        console.log(`SUCESSO CARTA ENCONTRADA => ${minhaCarta.nome}`)
+                        CartaGerada.findOne({ _id: req.params.carta }).lean().then((minhaCarta) => {
 
-                        var idCartaOponente = ""
+                            console.log(`SUCESSO CARTA ENCONTRADA => ${minhaCarta.nome}`)
 
-                        if (req.params.numeroCarta == "carta1") {
+                            var idCartaOponente = ""
 
-                            idCartaOponente = oponenteEscalacao.IDcarta1
-                            console.log(`${idCartaOponente}`)
+                            if (req.params.numeroCarta == "carta1") {
 
-                        }
-
-                        if (req.params.numeroCarta == "carta2") {
-
-                            idCartaOponente = oponenteEscalacao.IDcarta1
-                            console.log(`${idCartaOponente}`)
-
-                        }
-
-                        if (req.params.numeroCarta == "carta3") {
-
-                            idCartaOponente = oponenteEscalacao.IDcarta1
-                            console.log(`${idCartaOponente}`)
-
-                        }
-
-                        if (req.params.numeroCarta == "carta4") {
-
-                            idCartaOponente = oponenteEscalacao.IDcarta1
-                            console.log(`${idCartaOponente}`)
-
-                        }
-
-                        if (req.params.numeroCarta == "carta5") {
-
-                            idCartaOponente = oponenteEscalacao.IDcarta1
-                            console.log(`${idCartaOponente}`)
-
-                        }
-
-                        if (req.params.numeroCarta == "carta6") {
-
-                            idCartaOponente = oponenteEscalacao.IDcarta1
-                            console.log(`${idCartaOponente}`)
-
-                        }
-
-                        if (req.params.numeroCarta == "carta7") {
-
-                            idCartaOponente = oponenteEscalacao.IDcarta1
-                            console.log(`${idCartaOponente}`)
-
-                        }
-
-                        if (req.params.numeroCarta == "carta8") {
-
-                            idCartaOponente = oponenteEscalacao.IDcarta1
-                            console.log(`${idCartaOponente}`)
-
-                        }
-
-                        if (req.params.numeroCarta == "carta9") {
-
-                            idCartaOponente = oponenteEscalacao.IDcarta1
-                            console.log(`${idCartaOponente}`)
-
-                        }
-
-                        if (req.params.numeroCarta == "carta10") {
-
-                            idCartaOponente = oponenteEscalacao.IDcarta1
-                            console.log(`${idCartaOponente}`)
-
-                        }
-
-                        if (req.params.numeroCarta == "carta11") {
-
-                            idCartaOponente = oponenteEscalacao.IDcarta1
-                            console.log(`${idCartaOponente}`)
-
-                        }
-
-                        Partida.findOne({})
-
-                        CartaGerada.findOne({ _id: idCartaOponente }).lean().then((oponenteCarta) => {
-
-                            console.log(`SUCESSO CARTA ENCONTRADA => ${oponenteCarta.nome}`)
-
-                            if (req.params.atributo == "ritmo") {
-
-                                var valor_1 = minhaCarta.ritmo
-                                var valor_2 = oponenteCarta.ritmo
-                                
-                                if (valor_1 > valor_2) {
-
-                                    req.flash('success_msg', 'Você ganhou')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-
-                                } 
-
-                                if (valor_2 > valor_1) {
-
-                                    req.flash('error_msg', 'Você perdeu')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-                                }
-
-                                if (valor_1 == valor_2) {
-
-                                    req.flash('success_msg', 'Empate')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-
-                                }
-                                
+                                idCartaOponente = oponenteEscalacao.IDcarta1
+                                console.log(`${idCartaOponente}`)
 
                             }
 
-                            if (req.params.atributo == "finalizacao") {
+                            if (req.params.numeroCarta == "carta2") {
 
-                                var valor_1 = minhaCarta.finalizacao
-                                var valor_2 = oponenteCarta.finalizacao
-
-                                if (valor_1 > valor_2) {
-
-                                    req.flash('success_msg', 'Você ganhou')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-
-                                } 
-
-                                if (valor_2 > valor_1) {
-
-                                    req.flash('error_msg', 'Você perdeu')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-                                }
-
-                                if (valor_1 == valor_2) {
-
-                                    req.flash('success_msg', 'Empate')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-
-                                }
+                                idCartaOponente = oponenteEscalacao.IDcarta1
+                                console.log(`${idCartaOponente}`)
 
                             }
 
-                            if (req.params.atributo == "passe") {
+                            if (req.params.numeroCarta == "carta3") {
 
-                                var valor_1 = minhaCarta.passe
-                                var valor_2 = oponenteCarta.passe
-
-                                if (valor_1 > valor_2) {
-
-                                    req.flash('success_msg', 'Você ganhou')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-
-                                } 
-
-                                if (valor_2 > valor_1) {
-
-                                    req.flash('error_msg', 'Você perdeu')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-                                }
-
-                                if (valor_1 == valor_2) {
-
-                                    req.flash('success_msg', 'Empate')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-
-                                }
+                                idCartaOponente = oponenteEscalacao.IDcarta1
+                                console.log(`${idCartaOponente}`)
 
                             }
 
-                            if (req.params.atributo == "drible") {
+                            if (req.params.numeroCarta == "carta4") {
 
-                                var valor_1 = minhaCarta.drible
-                                var valor_2 = oponenteCarta.drible
-
-                                if (valor_1 > valor_2) {
-
-                                    req.flash('success_msg', 'Você ganhou')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-
-                                } 
-
-                                if (valor_2 > valor_1) {
-
-                                    req.flash('error_msg', 'Você perdeu')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-                                }
-
-                                if (valor_1 == valor_2) {
-
-                                    req.flash('success_msg', 'Empate')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-
-                                }
+                                idCartaOponente = oponenteEscalacao.IDcarta1
+                                console.log(`${idCartaOponente}`)
 
                             }
 
-                            if (req.params.atributo == "defesa") {
+                            if (req.params.numeroCarta == "carta5") {
 
-                                var valor_1 = minhaCarta.defesa
-                                var valor_2 = oponenteCarta.defesa
-
-                                if (valor_1 > valor_2) {
-
-                                    req.flash('success_msg', 'Você ganhou')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-
-                                } 
-
-                                if (valor_2 > valor_1) {
-
-                                    req.flash('error_msg', 'Você perdeu')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-                                }
-
-                                if (valor_1 == valor_2) {
-
-                                    req.flash('success_msg', 'Empate')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-
-                                }
+                                idCartaOponente = oponenteEscalacao.IDcarta1
+                                console.log(`${idCartaOponente}`)
 
                             }
 
-                            if (req.params.atributo == "fisico") {
+                            if (req.params.numeroCarta == "carta6") {
 
-                                var valor_1 = minhaCarta.fisico
-                                var valor_2 = oponenteCarta.fisico
-   
-                                if (valor_1 > valor_2) {
-
-                                    req.flash('success_msg', 'Você ganhou')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-
-                                } 
-
-                                if (valor_2 > valor_1) {
-
-                                    req.flash('error_msg', 'Você perdeu')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-                                }
-
-                                if (valor_1 == valor_2) {
-
-                                    req.flash('success_msg', 'Empate')
-                                    res.redirect(`/jogador/PvpOffline/meuTime/${minhaEscalacao._id}/${adversario._id}`)
-
-                                }
+                                idCartaOponente = oponenteEscalacao.IDcarta1
+                                console.log(`${idCartaOponente}`)
 
                             }
+
+                            if (req.params.numeroCarta == "carta7") {
+
+                                idCartaOponente = oponenteEscalacao.IDcarta1
+                                console.log(`${idCartaOponente}`)
+
+                            }
+
+                            if (req.params.numeroCarta == "carta8") {
+
+                                idCartaOponente = oponenteEscalacao.IDcarta1
+                                console.log(`${idCartaOponente}`)
+
+                            }
+
+                            if (req.params.numeroCarta == "carta9") {
+
+                                idCartaOponente = oponenteEscalacao.IDcarta1
+                                console.log(`${idCartaOponente}`)
+
+                            }
+
+                            if (req.params.numeroCarta == "carta10") {
+
+                                idCartaOponente = oponenteEscalacao.IDcarta1
+                                console.log(`${idCartaOponente}`)
+
+                            }
+
+                            if (req.params.numeroCarta == "carta11") {
+
+                                idCartaOponente = oponenteEscalacao.IDcarta1
+                                console.log(`${idCartaOponente}`)
+
+                            }
+
+                            CartaGerada.findOne({ _id: idCartaOponente }).lean().then((oponenteCarta) => {
+
+                                console.log(`SUCESSO CARTA ENCONTRADA => ${oponenteCarta.nome}`)
+
+                                if (req.params.atributo == "ritmo") {
+
+                                    var valor_1 = minhaCarta.ritmo
+                                    var valor_2 = oponenteCarta.ritmo
+
+                                    if (valor_1 > valor_2) {
+
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Vitória"
+
+                                        }
+
+                                        partida.ptsJogador = partida.ptsJogador + 1
+                                        partida.save()
+
+                                        req.flash('success_msg', 'Você ganhou')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                    if (valor_2 > valor_1) {
+
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Derrota"
+
+                                        }
+
+                                        partida.ptsOponente =  partida.ptsOponente + 1
+                                        partida.save()
+
+                                        req.flash('error_msg', 'Você perdeu')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                    if (valor_1 == valor_2) {
+
+                                        req.flash('success_msg', 'Empate')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+
+                                }
+
+                                if (req.params.atributo == "finalizacao") {
+
+                                    var valor_1 = minhaCarta.finalizacao
+                                    var valor_2 = oponenteCarta.finalizacao
+
+                                    if (valor_1 > valor_2) {
+
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Vitória"
+
+                                        }
+
+                                        partida.ptsJogador = partida.ptsJogador + 1
+                                        partida.save()
+
+                                        req.flash('success_msg', 'Você ganhou')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                    if (valor_2 > valor_1) {
+                                        
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Derrota"
+
+                                        }
+
+                                        partida.ptsOponente =  partida.ptsOponente + 1
+                                        partida.save()
+
+                                        req.flash('error_msg', 'Você perdeu')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                    if (valor_1 == valor_2) {
+
+                                        req.flash('success_msg', 'Empate')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                }
+
+                                if (req.params.atributo == "passe") {
+
+                                    var valor_1 = minhaCarta.passe
+                                    var valor_2 = oponenteCarta.passe
+
+                                    if (valor_1 > valor_2) {
+
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Vitória"
+
+                                        }
+
+                                        partida.ptsJogador = partida.ptsJogador + 1
+                                        partida.save()
+
+                                        req.flash('success_msg', 'Você ganhou')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                    if (valor_2 > valor_1) {
+
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Derrota"
+
+                                        }
+
+                                        partida.ptsOponente =  partida.ptsOponente + 1
+                                        partida.save()
+
+                                        req.flash('error_msg', 'Você perdeu')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                    if (valor_1 == valor_2) {
+
+                                        req.flash('success_msg', 'Empate')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                }
+
+                                if (req.params.atributo == "drible") {
+
+                                    var valor_1 = minhaCarta.drible
+                                    var valor_2 = oponenteCarta.drible
+
+                                    if (valor_1 > valor_2) {
+
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Vitória"
+
+                                        }
+
+                                        partida.ptsJogador = partida.ptsJogador + 1
+                                        partida.save()
+
+                                        req.flash('success_msg', 'Você ganhou')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                    if (valor_2 > valor_1) {
+
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Derrota"
+
+                                        }
+
+                                        partida.ptsOponente =  partida.ptsOponente + 1
+                                        partida.save()
+
+                                        req.flash('error_msg', 'Você perdeu')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                    if (valor_1 == valor_2) {
+
+                                        req.flash('success_msg', 'Empate')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                }
+
+                                if (req.params.atributo == "defesa") {
+
+                                    var valor_1 = minhaCarta.defesa
+                                    var valor_2 = oponenteCarta.defesa
+
+                                    if (valor_1 > valor_2) {
+
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Vitória"
+
+                                        }
+
+                                        partida.ptsJogador = partida.ptsJogador + 1
+                                        partida.save()
+
+                                        req.flash('success_msg', 'Você ganhou')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                    if (valor_2 > valor_1) {
+
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Derrota"
+
+                                        }
+
+                                        partida.ptsOponente =  partida.ptsOponente + 1
+                                        partida.save()
+
+                                        req.flash('error_msg', 'Você perdeu')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                    if (valor_1 == valor_2) {
+
+                                        req.flash('success_msg', 'Empate')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                }
+
+                                if (req.params.atributo == "fisico") {
+
+                                    var valor_1 = minhaCarta.fisico
+                                    var valor_2 = oponenteCarta.fisico
+
+                                    if (valor_1 > valor_2) {
+
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Vitória"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Vitória"
+
+                                        }
+
+                                        partida.ptsJogador = partida.ptsJogador + 1
+                                        partida.save()
+
+                                        req.flash('success_msg', 'Você ganhou')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                    if (valor_2 > valor_1) {
+
+                                        if (req.params.numeroCarta == "carta1") {
+
+                                            partida.rodada1 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta2") {
+
+                                            partida.rodada2 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta3") {
+
+                                            partida.rodada3 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta4") {
+
+                                            partida.rodada4 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta5") {
+
+                                            partida.rodada5 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta6") {
+
+                                            partida.rodada6 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta7") {
+
+                                            partida.rodada7 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta8") {
+
+                                            partida.rodada8 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta9") {
+
+                                            partida.rodada9 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta10") {
+
+                                            partida.rodada10 = "Derrota"
+
+                                        }
+                                        if (req.params.numeroCarta == "carta11") {
+
+                                            partida.rodada11 = "Derrota"
+
+                                        }
+
+                                        partida.ptsOponente =  partida.ptsOponente + 1
+                                        partida.save()
+
+                                        req.flash('error_msg', 'Você perdeu')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                    if (valor_1 == valor_2) {
+
+                                        req.flash('success_msg', 'Empate')
+                                        res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
+
+                                    }
+
+                                }
+
+                            })
+
+                        }).catch((erro) => {
+
+                            console.log(erro)
+                            req.flash('error_msg', 'ERRO! Houve um erro ao encontrar ao encontrar a sua carta!')
+                            res.redirect("/")
 
                         })
 
                     }).catch((erro) => {
 
-                        console.log(erro)
-                        req.flash('error_msg', 'ERRO! Houve um erro ao encontrar ao encontrar a sua carta!')
+                        req.flash('error_msg', 'ERRO! Houve um erro ao encontrar a escalação do adversário!')
                         res.redirect("/")
 
                     })
 
                 }).catch((erro) => {
 
-                    req.flash('error_msg', 'ERRO! Houve um erro ao encontrar a escalação do adversário!')
+                    req.flash('error_msg', 'ERRO! Houve um erro ao encontrar a sua escalação!')
                     res.redirect("/")
 
                 })
 
             }).catch((erro) => {
 
-                req.flash('error_msg', 'ERRO! Houve um erro ao encontrar a sua escalação!')
+                req.flash('error_msg', 'ERRO! Houve um erro ao conectar-se com o adversário!')
                 res.redirect("/")
 
             })
 
         }).catch((erro) => {
 
-            req.flash('error_msg', 'ERRO! Houve um erro ao conectar-se com o adversário!')
+            req.flash('error_msg', 'ERRO! Houve um erro ao conectar-se a sua conta!')
             res.redirect("/")
 
         })
-
-    }).catch((erro) => {
-
-        req.flash('error_msg', 'ERRO! Houve um erro ao conectar-se a sua conta!')
-        res.redirect("/")
 
     })
 

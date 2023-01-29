@@ -2,19 +2,31 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const Partida = new Schema({
-    jogador1: {
+    idPartida: {
         type: String,
         required: true
     },
-    jogador2: {
+    jogador: {
+        type: String,
+        required: true
+    },
+    oponente: {
         type: String,
         required: true 
     },
-    ptsJogador1: {
-        type: Number
+    lineMinha: {
+        type: String
     },
-    ptsJogador2: {
-        type: Number
+    lineOponente: {
+        type: String
+    },
+    ptsJogador: {
+        type: Number,
+        default: 0
+    },
+    ptsOponente: {
+        type: Number,
+        default: 0
     },
     rodada1: {
         type: String,
