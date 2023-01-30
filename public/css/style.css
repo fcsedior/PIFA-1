@@ -22,12 +22,12 @@
 }
 
 .tampar-nav {
-    position: relative;
+    position: absolute;
     background-size: 300% 300%;
     width: 100vw;
-    height: 100px;
+    height: 175px;
     background: #E4E9F7;
-    margin-top: -300px;
+    margin-top: -1230px;
 }
 
 /* ===== REUTILIZÁVEL ======= */
