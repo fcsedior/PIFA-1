@@ -2738,7 +2738,7 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                 console.log(`SUCESSO AO ENCONTRAR O OPONENTE => ${adversario.nomeClube}`)
 
-                LinePVP.findOne({ _id: partida.lineMinha }).lean().then((minhaEscalacao) => {
+                LinePVP.findOne({ _id: partida.lineMinha }).then((minhaEscalacao) => {
 
                     console.log(`SUCESSO AO ENCONTRAR A SUA LINEUP => ${minhaEscalacao.nome}`)
 
@@ -2844,55 +2844,99 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                             partida.rodada1 = "Vitória"
 
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
+                                            
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Vitória"
+
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Vitória"
 
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Vitória"
+
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Vitória"
 
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Vitória"
+
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Vitória"
 
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Vitória"
+
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Vitória"
 
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Vitória"
 
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Vitória"
+
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -2910,55 +2954,99 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                             partida.rodada1 = "Derrota"
 
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Derrota"
+                                            
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Derrota"
+                                            
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Derrota"
+                                            
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Derrota"
+                                            
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Derrota"
+                                            
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Derrota"
+                                            
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Derrota"
+                                            
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Derrota"
+                                            
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Derrota"
+                                            
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Derrota"
+                                            
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -2975,56 +3063,100 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
                                         if (req.params.numeroCarta == "carta1") {
 
                                             partida.rodada1 = "Empate"
+                                            
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Empate"
+                                            
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Empate"
+                                            
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Empate"
+                                            
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Empate"
+                                            
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Empate"
+                                            
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Empate"
+                                            
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Empate"
+                                            
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Empate"
+                                            
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Empate"
+                                            
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Empate"
+                                            
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -3043,59 +3175,104 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                     if (valor_1 > valor_2) {
 
+
                                         if (req.params.numeroCarta == "carta1") {
 
                                             partida.rodada1 = "Vitória"
 
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
+                                            
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Vitória"
+
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Vitória"
 
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Vitória"
+
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Vitória"
 
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Vitória"
+
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Vitória"
 
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Vitória"
+
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Vitória"
 
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Vitória"
 
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Vitória"
+
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -3113,58 +3290,101 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                             partida.rodada1 = "Derrota"
 
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Derrota"
+                                            
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Derrota"
+                                            
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Derrota"
+                                            
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Derrota"
+                                            
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Derrota"
+                                            
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Derrota"
+                                            
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Derrota"
+                                            
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Derrota"
+                                            
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Derrota"
+                                            
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Derrota"
+                                            
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
-
                                         partida.ptsOponente =  partida.ptsOponente + 1
                                         partida.save()
 
@@ -3175,60 +3395,103 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                     if (valor_1 == valor_2) {
 
-                                        
                                         if (req.params.numeroCarta == "carta1") {
 
                                             partida.rodada1 = "Empate"
+                                            
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Empate"
+                                            
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Empate"
+                                            
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Empate"
+                                            
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Empate"
+                                            
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Empate"
+                                            
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Empate"
+                                            
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Empate"
+                                            
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Empate"
+                                            
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Empate"
+                                            
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Empate"
+                                            
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -3246,59 +3509,104 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                     if (valor_1 > valor_2) {
 
+                                        
                                         if (req.params.numeroCarta == "carta1") {
 
                                             partida.rodada1 = "Vitória"
 
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
+                                            
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Vitória"
+
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Vitória"
 
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Vitória"
+
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Vitória"
 
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Vitória"
+
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Vitória"
 
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Vitória"
+
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Vitória"
 
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Vitória"
 
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Vitória"
+
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -3316,55 +3624,99 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                             partida.rodada1 = "Derrota"
 
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Derrota"
+                                            
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Derrota"
+                                            
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Derrota"
+                                            
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Derrota"
+                                            
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Derrota"
+                                            
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Derrota"
+                                            
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Derrota"
+                                            
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Derrota"
+                                            
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Derrota"
+                                            
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Derrota"
+                                            
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -3377,61 +3729,104 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
                                     }
 
                                     if (valor_1 == valor_2) {
-
                                         
                                         if (req.params.numeroCarta == "carta1") {
 
                                             partida.rodada1 = "Empate"
+                                            
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Empate"
+                                            
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Empate"
+                                            
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Empate"
+                                            
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Empate"
+                                            
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Empate"
+                                            
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Empate"
+                                            
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Empate"
+                                            
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Empate"
+                                            
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Empate"
+                                            
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Empate"
+                                            
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -3449,59 +3844,104 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                     if (valor_1 > valor_2) {
 
+                                        
                                         if (req.params.numeroCarta == "carta1") {
 
                                             partida.rodada1 = "Vitória"
 
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
+                                            
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Vitória"
+
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Vitória"
 
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Vitória"
+
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Vitória"
 
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Vitória"
+
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Vitória"
 
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Vitória"
+
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Vitória"
 
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Vitória"
 
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Vitória"
+
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -3519,58 +3959,101 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                             partida.rodada1 = "Derrota"
 
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Derrota"
+                                            
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Derrota"
+                                            
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Derrota"
+                                            
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Derrota"
+                                            
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Derrota"
+                                            
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Derrota"
+                                            
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Derrota"
+                                            
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Derrota"
+                                            
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Derrota"
+                                            
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Derrota"
+                                            
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
-
                                         partida.ptsOponente =  partida.ptsOponente + 1
                                         partida.save()
 
@@ -3580,64 +4063,106 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
                                     }
 
                                     if (valor_1 == valor_2) {
-
                                         
                                         if (req.params.numeroCarta == "carta1") {
 
                                             partida.rodada1 = "Empate"
+                                            
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Empate"
+                                            
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Empate"
+                                            
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Empate"
+                                            
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Empate"
+                                            
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Empate"
+                                            
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Empate"
+                                            
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Empate"
+                                            
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Empate"
+                                            
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Empate"
+                                            
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Empate"
+                                            
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
-
                                         req.flash('success_msg', 'Empate')
                                         res.redirect(`/jogador/PvpOffline/meuTime/${partida._id}/${minhaEscalacao._id}`)
 
@@ -3652,59 +4177,104 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                     if (valor_1 > valor_2) {
 
+                                        
                                         if (req.params.numeroCarta == "carta1") {
 
                                             partida.rodada1 = "Vitória"
 
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
+                                            
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Vitória"
+
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Vitória"
 
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Vitória"
+
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Vitória"
 
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Vitória"
+
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Vitória"
 
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Vitória"
+
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Vitória"
 
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Vitória"
 
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Vitória"
+
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -3722,55 +4292,99 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                             partida.rodada1 = "Derrota"
 
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Derrota"
+                                            
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Derrota"
+                                            
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Derrota"
+                                            
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Derrota"
+                                            
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Derrota"
+                                            
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Derrota"
+                                            
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Derrota"
+                                            
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Derrota"
+                                            
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Derrota"
+                                            
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Derrota"
+                                            
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -3783,61 +4397,104 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
                                     }
 
                                     if (valor_1 == valor_2) {
-
                                         
                                         if (req.params.numeroCarta == "carta1") {
 
                                             partida.rodada1 = "Empate"
+                                            
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Empate"
+                                            
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Empate"
+                                            
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Empate"
+                                            
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Empate"
+                                            
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Empate"
+                                            
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Empate"
+                                            
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Empate"
+                                            
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Empate"
+                                            
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Empate"
+                                            
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Empate"
+                                            
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -3855,59 +4512,104 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                     if (valor_1 > valor_2) {
 
+                                        
                                         if (req.params.numeroCarta == "carta1") {
 
                                             partida.rodada1 = "Vitória"
 
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
+                                            
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Vitória"
+
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Vitória"
 
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Vitória"
+
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Vitória"
 
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Vitória"
+
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Vitória"
 
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Vitória"
+
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Vitória"
 
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Vitória"
 
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Vitória"
+
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -3925,55 +4627,99 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                                             partida.rodada1 = "Derrota"
 
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
+
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Derrota"
+                                            
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Derrota"
+                                            
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Derrota"
+                                            
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Derrota"
+                                            
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Derrota"
+                                            
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Derrota"
+                                            
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Derrota"
+                                            
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Derrota"
+                                            
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Derrota"
+                                            
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Derrota"
+                                            
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
@@ -3986,61 +4732,104 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
                                     }
 
                                     if (valor_1 == valor_2) {
-
                                         
                                         if (req.params.numeroCarta == "carta1") {
 
                                             partida.rodada1 = "Empate"
+                                            
+                                            minhaEscalacao.carta1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta1 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta2") {
 
                                             partida.rodada2 = "Empate"
+                                            
+                                            minhaEscalacao.carta2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta2 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta3") {
 
                                             partida.rodada3 = "Empate"
+                                            
+                                            minhaEscalacao.carta3 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta3 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta4") {
 
                                             partida.rodada4 = "Empate"
+                                            
+                                            minhaEscalacao.carta4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta4 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta5") {
 
                                             partida.rodada5 = "Empate"
+                                            
+                                            minhaEscalacao.carta5 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta5 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta6") {
 
                                             partida.rodada6 = "Empate"
+                                            
+                                            minhaEscalacao.carta6 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta6 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta7") {
 
                                             partida.rodada7 = "Empate"
+                                            
+                                            minhaEscalacao.carta7 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta7 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta8") {
 
                                             partida.rodada8 = "Empate"
+                                            
+                                            minhaEscalacao.carta8 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta8 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta9") {
 
                                             partida.rodada9 = "Empate"
+                                            
+                                            minhaEscalacao.carta9 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta9 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta10") {
 
                                             partida.rodada10 = "Empate"
+                                            
+                                            minhaEscalacao.carta10 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta10 = ""
+                                            minhaEscalacao.save()
 
                                         }
                                         if (req.params.numeroCarta == "carta11") {
 
                                             partida.rodada11 = "Empate"
+                                            
+                                            minhaEscalacao.carta11 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/640px-HD_transparent_picture.png"
+                                            minhaEscalacao.IDcarta11 = ""
+                                            minhaEscalacao.save()
 
                                         }
 
