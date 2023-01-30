@@ -21,6 +21,9 @@ const Lineup = mongoose.model("lineups")
 require("../models/Partida")
 const Partida = mongoose.model("partidas")
 
+require("../models/LineBatalha")
+const LinePVP = mongoose.model("lineupsPVP")
+
 // Funções
 
 
@@ -2415,71 +2418,132 @@ router.get("/pvpOffline/encontrarAdversario/:escalacao", (req, res) => { // Aqui
 
     console.log("CHEGOU NO ENCONTRAR ADVERSARIO")
 
-    Jogador.find({ novo: 1 }).lean().then((jogadores) => {
+    Lineup.findOne({_id: req.params.escalacao}).then((escalacao) => {
 
-        var jogadoresDisponiveis = []
+        Jogador.find({ novo: 1 }).lean().then((jogadores) => {
 
-        jogadores.forEach(jogador => {
-
-            if (jogador.nomeClube != jogadorLogado.nomeClube) {
-
-                console.log(`${jogador._id} => ${jogadorLogado.id}`)
-
-                jogadoresDisponiveis.push(jogador.nomeClube)
-
-            }
-
-        })
-
-        var idAdversario = Math.floor(Math.random() * jogadoresDisponiveis.length)
-        var Adversario = jogadoresDisponiveis[idAdversario]
-
-        console.log(`JOGADORES => ${jogadoresDisponiveis}`)
-        console.log(`Adversário => ${Adversario}`)
-
-        Jogador.findOne({ nomeClube: Adversario }).lean().then((oponente) => {
-
-            var partidaID = getPassword()
-
-            var novaPartida = {
-                idPartida: partidaID,
-                jogador: jogadorLogado.id,
-                oponente: oponente._id,
-
-            }
-
-            new Partida(novaPartida).save().then(() => {
-
-                console.log(`OPONENTE => ${oponente.nome}`)
-                Partida.findOne({ idPartida: partidaID }).lean().then((partida) => {
-
-                    res.render("jogador/aceitarPvpOff", { jogador: jogadorLogado, adversario: oponente, lineup: req.params.escalacao, partida: partida })
-
-                }).catch((erro) => {
-
-                    req.flash('error_msg', 'ERRO! Não foi possível carregar a partida...')
-                    res.redirect("/")
-
-                })
-
-            }).catch((erro) => {
-
-                req.flash('error_msg', 'ERRO! Não foi possível gerar a nova partida...')
-                res.redirect("/")
-
+            var jogadoresDisponiveis = []
+    
+            jogadores.forEach(jogador => {
+    
+                if (jogador.nomeClube != jogadorLogado.nomeClube) {
+    
+                    console.log(`${jogador._id} => ${jogadorLogado.id}`)
+    
+                    jogadoresDisponiveis.push(jogador.nomeClube)
+    
+                }
+    
             })
+    
+            var idAdversario = Math.floor(Math.random() * jogadoresDisponiveis.length)
+            var Adversario = jogadoresDisponiveis[idAdversario]
+    
+            console.log(`JOGADORES => ${jogadoresDisponiveis}`)
+            console.log(`Adversário => ${Adversario}`)
+    
+            Jogador.findOne({ nomeClube: Adversario }).lean().then((oponente) => {
+    
+                var LineupID = getPassword()
+    
+                var partidaID = getPassword()
+    
+                var novaLine = {
+                    nome: escalacao.nome,
+                    forca: escalacao.forca,
+                    carta1: escalacao.carta1,
+                    carta2: escalacao.carta2,
+                    carta3: escalacao.carta3,
+                    carta4: escalacao.carta4,
+                    carta5: escalacao.carta5,
+                    carta6: escalacao.carta6,
+                    carta7: escalacao.carta7,
+                    carta8: escalacao.carta8,
+                    carta9: escalacao.carta9,
+                    carta10: escalacao.carta10,
+                    carta11: escalacao.carta11,
+                    IDcarta1: escalacao.IDcarta1, 
+                    IDcarta2: escalacao.IDcarta1,
+                    IDcarta3: escalacao.IDcarta1,
+                    IDcarta4: escalacao.IDcarta1,
+                    IDcarta5: escalacao.IDcarta1,
+                    IDcarta6: escalacao.IDcarta1,
+                    IDcarta7: escalacao.IDcarta1,
+                    IDcarta8: escalacao.IDcarta1,
+                    IDcarta9: escalacao.IDcarta1,
+                    IDcarta10: escalacao.IDcarta1,
+                    IDcarta11: escalacao.IDcarta1,
+                    dono: escalacao.dono,
+                    titular: escalacao.titular,
+                    idLinePVP: LineupID
+                }
+    
+                var novaPartida = {
+                    idPartida: partidaID,
+                    jogador: jogadorLogado.id,
+                    oponente: oponente._id,
+    
+                }
+    
+                new Partida(novaPartida).save().then(() => {
+    
+                    new LinePVP(novaLine).save().then(() => {
 
+                        LinePVP.findOne({idLinePVP: LineupID}).then((escalacaoNova) => {
+
+                            console.log(escalacaoNova)
+
+                            console.log(`OPONENTE => ${oponente.nome}`)
+    
+                            Partida.findOne({ idPartida: partidaID }).lean().then((partida) => {
+
+                                console.log(partida)
+            
+                                res.render("jogador/aceitarPvpOff", { jogador: jogadorLogado, adversario: oponente, lineup: escalacaoNova._id, partida: partida })
+            
+                            }).catch((erro) => {
+            
+                                console.log(erro)
+                                req.flash('error_msg', 'ERRO! Não foi possível carregar a partida...')
+                                res.redirect("/")
+            
+                            })
+
+                        }).catch((erro) => {
+
+                            req.flash('error_msg', 'ERRO! Não foi possível carregar seus jogadores...')
+                            res.redirect("/")
+
+                        })
+
+                    }).catch((erro) => {
+
+                        req.flash('error_msg', 'ERRO! Não foi possível carregar sua escalação...')
+                        res.redirect("/")
+
+                    })
+    
+                }).catch((erro) => {
+    
+                    req.flash('error_msg', 'ERRO! Não foi possível gerar a nova partida...')
+                    res.redirect("/")
+    
+                })
+    
+            }).catch((erro) => {
+    
+                req.flash('error_msg', 'ERRO! Não foi possível encontrar um adversário...')
+                res.redirect("/")
+    
+            })
+    
         }).catch((erro) => {
-
-            req.flash('error_msg', 'ERRO! Não foi possível encontrar um adversário...')
+    
+            req.flash('error_msg', 'ERRO! Não foi possível encontrar nenhum jogador...')
             res.redirect("/")
-
+    
         })
-
-    }).catch((erro) => {
-
-        req.flash('error_msg', 'ERRO! Não foi possível encontrar nenhum jogador...')
-        res.redirect("/")
+    
 
     })
 
@@ -2514,7 +2578,7 @@ router.get("/PvpOffline/meuTime/:partida/:escalacao", (req, res) => { // Aqui ve
                 partida.lineOponente = escalacaoOponente._id
                 console.log(`ESCALACAO DO OPONENTE => ${escalacaoOponente.nome}`)
 
-                Lineup.findOne({ _id: req.params.escalacao }).lean().then((escalacaoMinha) => {
+                LinePVP.findOne({ _id: req.params.escalacao }).lean().then((escalacaoMinha) => {
 
                     partida.lineMinha = escalacaoMinha._id
 
@@ -2602,7 +2666,7 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta", (req, res) 
 
                     console.log(`OPONENTE ESCALACAO => ${escalacaoOponente.nome}`)
 
-                    Lineup.findOne({ _id: partida.lineMinha }).lean().then((escalacaoMinha) => {
+                    LinePVP.findOne({ _id: partida.lineMinha }).lean().then((escalacaoMinha) => {
 
                         console.log(`MINHA ESCALACAO => ${escalacaoMinha.nome}`)
 
@@ -2674,7 +2738,7 @@ router.get("/pvpOffline/escolherCarta/:partida/:carta/:numeroCarta/:atributo", (
 
                 console.log(`SUCESSO AO ENCONTRAR O OPONENTE => ${adversario.nomeClube}`)
 
-                Lineup.findOne({ _id: partida.lineMinha }).lean().then((minhaEscalacao) => {
+                LinePVP.findOne({ _id: partida.lineMinha }).lean().then((minhaEscalacao) => {
 
                     console.log(`SUCESSO AO ENCONTRAR A SUA LINEUP => ${minhaEscalacao.nome}`)
 
